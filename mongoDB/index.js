@@ -13,7 +13,7 @@ mongoose.connection
     uniData.count({}, (err, count) => {
       // console.log("Entry number: " + count);
 
-      if (count === 0) {
+      if (count === 8) {
         var pranav = new uniData({
           name: "bobthesnek63",
           unis: uniJSON["bobthesnek63"],
@@ -55,6 +55,18 @@ mongoose.connection
         ziad.save();
         zimo.save();
         iman.save();
+      } else if (count === 8){
+        var boshra = new uniData({
+          name: "breakititsfine",
+          unis: uniJSON["breakititsfine"],
+        });
+        var jake = new uniData({
+          name: "jshin4",
+          unis: uniJSON["jshin4"],
+        });
+
+        boshra.save();
+        jake.save();
       }
     });
   })
