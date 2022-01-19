@@ -22,7 +22,7 @@ client.on("ready", () => {
 
 client.on("messageCreate", async (msg) => {
   if (msg.content == "!show") {
-    if (msg.channelId = "933150268852408330"){
+    if (msg.channelId == "933150268852408330" || msg.channelId == "933473094968946768"){
       let name = msg.author.username;
       let uniList = await getUnisList(name);
 
@@ -31,8 +31,7 @@ client.on("messageCreate", async (msg) => {
   }
 
   if (msg.content == "!accept") {
-    console.log(msg);
-    if (msg.channelId = "933150268852408330"){
+    if (msg.channelId == "933150268852408330" || msg.channelId == "933473094968946768"){
       global.name = msg.author.username;
 
       let ans = await getUnisList(global.name);

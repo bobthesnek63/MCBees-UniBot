@@ -3,10 +3,10 @@
     "UofT CS": "Undecided",
     "Waterloo SE": "Undecided",
     "Waterloo CS": "Undecided",
-    "Carleton CS": "Undecided",
+    "Carleton CS": "Accepted",
     "McMaster CS": "Undecided",
-    "UOttawa CS": "Undecided",
-    "Queens CS": "Undecided",
+    "UOttawa CS": "Accepted",
+    "Queens CS": "Accpeted",
     "Guelph CS": "Accepted"
   },
   "singhster": {
@@ -15,7 +15,7 @@
     "Queens Eng": "Undecided",
     "Western Mech Eng": "Undecided",
     "Ryerson Mech Eng": "Undecided",
-    "UOttawa Mech Eng": "Undecided",
+    "UOttawa Mech Eng": "Accepted",
     "Waterloo Aviation": "Undecided"
   },
   "zoya": {
@@ -36,7 +36,7 @@
     "Waterloo Health Sci": "Undecided",
     "Queens Life Sci": "Undecided",
     "Queens Health Sci": "Undecided",
-    "York Bio": "Undecided"
+    "York Bio": "Accepted"
   },
   "zayed.kherani": {
     "UofT [SC] Physical Sciences": "Undecided",
@@ -57,15 +57,15 @@
     "Ryerson Undeclared Eng": "Undecided",
     "McMaster Eng": "Undecided",
     "Western Eng": "Undecided",
-    "Ottawa Civil Eng": "Undecided",
+    "Ottawa Civil Eng": "Accepted",
     "Carleton Civil Eng": "Undecided"
   },
   "zix": {
     "UofT Social Sciences": "Undecided",
-    "Queens Arts": "Undecided",
+    "Queens Arts": "Accepted",
     "McMaster Social Sciences": "Undecided",
-    "York Political Sciences": "Undecided",
-    "Ottawa Comm/PoliSci": "Undecided",
+    "York Political Sciences": "Accepted",
+    "Ottawa Comm/PoliSci": "Accepted",
     "Waterloo Honors Arts": "Undecided"
   },
   ".iman.": {

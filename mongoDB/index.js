@@ -3,7 +3,7 @@ const uniData = require("./model");
 const uniJSON = require("../unis.json");
 require("dotenv").config({ path: "./.env" });
 
-const uri = `mongodb+srv://bobthesnek63:${process.env.MONGO_KEY}@cluster0.b8lel.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
+const uri = `mongodb+srv://bobthesnek63:${process.env.MONGO_KEY}@cluster0.b8lel.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
 
 mongoose.Promise = global.Promise;
 mongoose.connect(uri);
@@ -13,7 +13,7 @@ mongoose.connection
     uniData.count({}, (err, count) => {
       // console.log("Entry number: " + count);
 
-      if (count === 8) {
+      if (count === 0) {
         var pranav = new uniData({
           name: "bobthesnek63",
           unis: uniJSON["bobthesnek63"],
@@ -46,16 +46,6 @@ mongoose.connection
           name: ".iman.",
           unis: uniJSON[".iman."],
         });
-        
-        pranav.save();
-        zoya.save();
-        haram.save();
-        dev.save();
-        zayed.save();
-        ziad.save();
-        zimo.save();
-        iman.save();
-      } else if (count === 8){
         var boshra = new uniData({
           name: "breakititsfine",
           unis: uniJSON["breakititsfine"],
@@ -65,6 +55,14 @@ mongoose.connection
           unis: uniJSON["jshin4"],
         });
 
+        pranav.save();
+        zoya.save();
+        haram.save();
+        dev.save();
+        zayed.save();
+        ziad.save();
+        zimo.save();
+        iman.save();
         boshra.save();
         jake.save();
       }
