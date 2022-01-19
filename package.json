@@ -1,0 +1,22 @@
+{
+  "name": "unibot-mc-bees",
+  "version": "1.0.0",
+  "description": "A discorb bot for a private server",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://git.heroku.com/mcbees-unibot.git"
+  },
+  "author": "Pranav Vyas",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^13.6.0",
+    "dotenv": "^14.2.0",
+    "edit-json-file": "^1.7.0",
+    "express": "^4.17.2",
+    "mongoose": "^6.1.7"
+  }
+}
