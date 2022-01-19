@@ -74,5 +74,26 @@
     "UofT Arch Studies": "Undecided",
     "OCAD Env Design": "Undecided",
     "Guelph Landscape Arch": "Undecided"
+  },
+  "breakititsfine": {
+    "McMaster Biotech": "Undecided",
+    "Laurier Law/Sci": "Undecided",
+    "Waterloo Biotech": "Undecided",
+    "UofT [M] Forensic Sci": "Undecided",
+    "Laurier Law/Arts": "Undecided",
+    "Guelph Criminal Justice": "Undecided",
+    "York Env Management": "Undecided",
+    "Guelph Env Management": "Undecided",
+    "Waterloo Health Sci": "Undecided",
+    "McMaster Life Sci": "Undecided",
+    "Guelph Justice Studies": "Undecided",
+    "Ryerson Urban Sustainability": "Undecided",
+    "Ryerson Occupational Health": "Undecided"
+  },
+  "jshin4": {
+    "Waterloo SoftEng": "Undecided",
+    "Waterloo CS": "Undecided",
+    "UofT CS": "Undecided",
+    "Waterloo Math": "Undecided"
   }
 }
