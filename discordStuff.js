@@ -31,7 +31,7 @@ client.on("interactionCreate", async (interaction) => {
   if (!interaction.isButton()) return;
 
   if (interaction.customId == "accept") {
-    // console.log(interaction);
+    console.log(interaction);
     global.name = interaction.user.username;
 
     let ans = await getUnisList(global.name);
@@ -39,6 +39,14 @@ client.on("interactionCreate", async (interaction) => {
 
     interaction.update({
       content: `Which of these programs did you get accepted to?\n${ans}`,
+      components: [],
+    });
+  }
+
+  if (interaction.customId == "chance") {
+
+    interaction.update({
+      content: "You have a 100% chance of getting into your top choice!",
       components: [],
     });
   }
@@ -57,7 +65,11 @@ client.on("messageCreate", async (msg) => {
         new MessageButton()
           .setCustomId("accept")
           .setLabel("Accept")
-          .setStyle("SUCCESS")
+          .setStyle("SUCCESS"),
+        new MessageButton()
+          .setCustomId("chance")
+          .setLabel("Chances")
+          .setStyle("DANGER")
       );
 
       msg.reply({
@@ -67,6 +79,7 @@ client.on("messageCreate", async (msg) => {
     }
   }
 
+  // Finds Program name and updates
   if (
     global.arr.length != 0 &&
     msg.author.username == global.name &&
