@@ -1,7 +1,14 @@
-const { Client, Collection, Intents } = require("discord.js");
+const {
+  Client,
+  Collection,
+  Intents,
+  MessageActionRow,
+  MessageButton,
+} = require("discord.js");
 let unisJson = require("./unis.json");
 const uniData = require("./mongoDB/model");
 const editJsonFile = require("edit-json-file");
+const { channel } = require("diagnostics_channel");
 require("dotenv").config({ path: "./.env" });
 
 global.arr = [];
@@ -20,27 +27,59 @@ client.on("ready", () => {
   console.info(`Logged in as ${client.user.tag}!`);
 });
 
+client.on("interactionCreate", async (interaction) => {
+  if (!interaction.isButton()) return;
+
+  if (interaction.customId == "accept") {
+    console.log(interaction);
+    global.name = interaction.user.username;
+
+    let ans = await getUnisList(global.name);
+    global.arr = await getUnisArr(global.name);
+
+    interaction.update({
+      content: `Which of these programs did you get accepted to?\n${ans}`,
+      components: [],
+    });
+  }
+
+  if (interaction.customId == "chance") {
+
+    interaction.update({
+      content: "You have a 100% chance of getting into your top choice!",
+      components: [],
+    });
+  }
+});
+
 client.on("messageCreate", async (msg) => {
   if (msg.content == "!show") {
-    if (msg.channelId == "933150268852408330" || msg.channelId == "933473094968946768"){
+    if (
+      msg.channelId == "933150268852408330" ||
+      msg.channelId == "933473094968946768"
+    ) {
       let name = msg.author.username;
       let uniList = await getUnisList(name);
 
-      msg.reply(`Here are your current uni programs!\n${uniList}`);
+      const row = new MessageActionRow().addComponents(
+        new MessageButton()
+          .setCustomId("accept")
+          .setLabel("Accept")
+          .setStyle("SUCCESS"),
+        new MessageButton()
+          .setCustomId("chance")
+          .setLabel("Chances")
+          .setStyle("DANGER")
+      );
+
+      msg.reply({
+        content: `Here are your current uni programs!\n${uniList}`,
+        components: [row],
+      });
     }
   }
 
-  if (msg.content == "!accept") {
-    if (msg.channelId == "933150268852408330" || msg.channelId == "933473094968946768"){
-      global.name = msg.author.username;
-
-      let ans = await getUnisList(global.name);
-      global.arr = await getUnisArr(global.name);
-
-      msg.reply(`Which of these programs did you get accepted to?\n${ans}`);
-    }
-  }
-
+  // Finds Program name and updates
   if (
     global.arr.length != 0 &&
     msg.author.username == global.name &&
@@ -80,7 +119,6 @@ client.login(process.env.DISCORD_TOKEN);
 // }
 
 function changeUniStatus(nameRec, uni) {
-
   uniData.findOne({ name: nameRec }, function (err, res) {
     let personUniList = res.unis;
     personUniList[uni] = "Accepted";
@@ -94,7 +132,7 @@ function changeUniStatus(nameRec, uni) {
           console.log("Something went wrong with the upload");
         }
 
-        console.log(doc);
+        // console.log(doc);
       }
     );
   });
@@ -130,7 +168,6 @@ async function getUnisArr(name) {
 
   let list = await uniData.findOne({ name: name }).clone();
   list = list.unis;
-  console.log("TEST", list);
 
   for (var i in list) {
     ans.push(i);
