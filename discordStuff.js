@@ -33,19 +33,19 @@ client.on("interactionCreate", async (interaction) => {
   if (!interaction.isButton()) return;
 
   if (interaction.customId == "accept") {
+    
     global.name = interaction.user.username;
 
     let ans = await getUnisList(global.name);
     global.arr = await getUnisArray(global.name);
-
-    interaction.update({
+    await interaction.update({
       content: `Which of these programs did you get accepted to?\n${ans}`,
       components: [],
     });
   }
 
   if (interaction.customId == "chance") {
-    interaction.update({
+    await interaction.update({
       content: "You have a 100% chance of getting into your top choice!",
       components: [],
     });
@@ -88,7 +88,7 @@ client.on("messageCreate", async (msg) => {
   ) {
     var found = false;
     for (var i = 0; i < global.arr.length; ++i) {
-      if (msg.content == global.arr[i]) {
+      if (msg.content.toUpperCase() == global.arr[i].toUpperCase()) {
         found = true;
         changeUniStatus(global.name, global.arr[i]);
         msg.reply("CONGRATS ON GETTING IN! Your Uni record has been updated");
