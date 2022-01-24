@@ -6,7 +6,11 @@ const {
   MessageButton,
 } = require("discord.js");
 
-const { getUnisList, changeUniStatus, getUnisArray } = require('./helper/discordFunctions');
+const {
+  getUnisList,
+  changeUniStatus,
+  getUnisArray,
+} = require("./helper/discordFunctions");
 require("dotenv").config({ path: "./.env" });
 
 global.arr = [];
@@ -50,8 +54,11 @@ client.on("interactionCreate", async (interaction) => {
 
 client.on("messageCreate", async (msg) => {
   if (msg.content == "!show") {
-    if (msg.channelId == process.env.UNIBOT_THREAD || msg.channelId == process.env.BOT_TESTING) {
-      
+    if (
+      msg.channelId == process.env.UNIBOT_THREAD ||
+      msg.channelId == process.env.BOT_TESTING ||
+      msg.channelId == process.env.UNIBOT_CHANNEL
+    ) {
       let name = msg.author.username;
       let uniList = await getUnisList(name);
 
