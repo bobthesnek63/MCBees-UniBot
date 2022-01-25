@@ -52,12 +52,13 @@ client.on("interactionCreate", async (interaction) => {
 });
 
 client.on("messageCreate", async (msg) => {
-  if (msg.content == "!show") {
-    if (
-      msg.channelId == process.env.UNIBOT_THREAD ||
-      msg.channelId == process.env.BOT_TESTING ||
-      msg.channelId == process.env.UNIBOT_CHANNEL
-    ) {
+  if (
+    msg.channelId == process.env.UNIBOT_THREAD ||
+    msg.channelId == process.env.BOT_TESTING ||
+    msg.channelId == process.env.UNIBOT_CHANNEL
+  ) {
+    if (msg.content == "!show") {
+      
       let name = msg.author.username;
       let uniList = await getUnisList(name);
 
@@ -76,18 +77,21 @@ client.on("messageCreate", async (msg) => {
         content: `Here are your current uni programs!\n${uniList}`,
         components: [row],
       });
+
+      // checks if user is trying to find someone elses university choices
+    } else if (msg.content.slice(0, 5) == "!show") {
+      let name = client.users.fetch(msg.content.slice(9, msg.content.length - 1));
+      name = (await name).username;
+      let uniList = await getUnisList(name);
+
+      msg.reply({
+        content: `Here are ${name}'s current uni programs!\n${uniList}`,
+      });
     }
-  } else if (msg.content.slice(0, 5) == "!show") {
-    let name = client.users.fetch(msg.content.slice(9, msg.content.length - 1));
-    name = (await name).username;
-    let uniList = await getUnisList(name);
-
-    msg.reply({
-      content: `Here are ${name}'s current uni programs!\n${uniList}`,
-    });
   }
+    
 
-  // Finds Program name and updates
+  // Finds program name and updates users list
   if (
     global.arr.length != 0 &&
     msg.author.username == global.name &&
