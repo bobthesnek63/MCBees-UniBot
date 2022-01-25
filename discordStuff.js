@@ -79,7 +79,7 @@ client.on("messageCreate", async (msg) => {
       });
 
       // checks if user is trying to find someone elses university choices
-    } else if (msg.content.slice(0, 5) == "!show") {
+    } else if (msg.content.slice(0, 5) == "!show" && msg.content.slice(6, 9) == "<@!") {
       let name = client.users.fetch(msg.content.slice(9, msg.content.length - 1));
       name = (await name).username;
       let uniList = await getUnisList(name);
