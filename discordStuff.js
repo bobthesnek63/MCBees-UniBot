@@ -33,7 +33,6 @@ client.on("interactionCreate", async (interaction) => {
   if (!interaction.isButton()) return;
 
   if (interaction.customId == "accept") {
-    
     global.name = interaction.user.username;
 
     let ans = await getUnisList(global.name);
@@ -78,6 +77,14 @@ client.on("messageCreate", async (msg) => {
         components: [row],
       });
     }
+  } else if (msg.content.slice(0, 5) == "!show") {
+    let name = client.users.fetch(msg.content.slice(9, msg.content.length - 1));
+    name = (await name).username;
+    let uniList = await getUnisList(name);
+
+    msg.reply({
+      content: `Here are ${name}'s current uni programs!\n${uniList}`,
+    });
   }
 
   // Finds Program name and updates
