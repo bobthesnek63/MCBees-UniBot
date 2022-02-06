@@ -22,23 +22,21 @@ const getUnisList = async (nameReceived) => {
     ans += "**";
     return ans;
   } catch (err) {
-    console.log(err);
+    console.log("Uni List Error: " + err);
   }
 };
 
 const changeUniStatus = (nameReceived, uni) => {
-
   uniData.findOne({ name: nameReceived }, function (err, res) {
     let personUniList = res.unis;
     personUniList[uni] = "Accepted";
-    console.log(personUniList);
     uniData.findOneAndUpdate(
       { name: nameReceived },
       { unis: personUniList },
       { returnOriginal: false },
       function (err, doc) {
         if (err) {
-          console.log("Something went wrong with the upload");
+          console.log("Uni Status Error: " + err);
         }
       }
     );
@@ -58,6 +56,68 @@ const getUnisArray = async (nameReceived) => {
   return ans;
 };
 
+const addUni = async (uniName, username) => {
+  let uniList = {};
+
+  let list = await uniData
+    .findOne({ name: username }, function (err, res) {})
+    .clone();
+  list = list.unis;
+
+  for (var [uni, uniDecision] of Object.entries(list)) {
+    uniList[uni] = uniDecision;
+  }
+
+  uniList[uniName] = "Undecided";
+
+  uniData.findOne({ name: username }, function (err, res) {
+    let personUniList = uniList;
+    uniData.findOneAndUpdate(
+      { name: username },
+      { unis: personUniList },
+      { returnOriginal: false },
+      function (err, doc) {
+        if (err) {
+          console.log("Uni Status Error: " + err);
+        }
+      }
+    );
+  });
+
+  return;
+};
+
+const removeUni = async (uniName, username) => {
+  let uniList = {};
+
+  let list = await uniData
+    .findOne({ name: username }, function (err, res) {})
+    .clone();
+  list = list.unis;
+
+  for (var [uni, uniDecision] of Object.entries(list)) {
+    if (!(uni == uniName)) {
+      uniList[uni] = uniDecision;
+    }
+  }
+
+  uniData.findOne({ name: username }, function (err, res) {
+    let personUniList = uniList;
+    uniData.findOneAndUpdate(
+      { name: username },
+      { unis: personUniList },
+      { returnOriginal: false },
+      function (err, doc) {
+        if (err) {
+          console.log("Uni Status Error: " + err);
+        }
+      }
+    );
+  });
+
+  return;
+}
+
 const addPersonToDatabase = () => {
   let file = editJsonFile(`${__dirname}/unis.json`);
   file.set(`${name}.${uni}`, "Accepted");
@@ -72,4 +132,6 @@ module.exports = {
   changeUniStatus,
   getUnisArray,
   addPersonToDatabase,
+  addUni,
+  removeUni,
 };

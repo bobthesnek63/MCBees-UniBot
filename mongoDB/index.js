@@ -11,7 +11,6 @@ mongoose.connect(uri);
 mongoose.connection
   .once("open", () => {
     uniData.count({}, (err, count) => {
-
       if (count === 0) {
         var pranav = new uniData({
           name: "bobthesnek63",

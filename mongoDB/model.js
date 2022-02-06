@@ -3,7 +3,7 @@ const schema = mongoose.Schema;
 
 const uniDataSchema = new schema({
   name: String,
-  unis: Object
+  unis: Object,
 });
 
 const uniData = mongoose.model("uniData", uniDataSchema);
