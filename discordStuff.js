@@ -36,19 +36,11 @@ const client = new Client({
 client.on("ready", () => {
   console.info(`Logged in as ${client.user.tag}!`);
 
-  // client.user.setPresence({
-  //   status: "online",
-  //   game: {
-  //     name: "!help",
-  //     type: "LISTENING",
-  //   },
-  // });
-
   client.user.setPresence({
     status: "online",
     activities: [
       {
-        name: "getting developed lol 😔",
+        name: "!show",
         type: "LISTENING",
       },
     ],
