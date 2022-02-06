@@ -69,11 +69,15 @@ client.on("interactionCreate", async (interaction) => {
         content:
           "You have 0% chance of getting into your top choice, please leave.",
         components: [],
+      }).catch(err => {
+        console.log(err);
       });
     } else {
       await interaction.update({
         content: "You have a 100% chance of getting into your top choice!",
         components: [],
+      }).catch(err => {
+        console.log(err);
       });
     }
   }
