@@ -55,6 +55,8 @@ const getUnisArray = async (nameReceived) => {
   let list = await uniData.findOne({ name: nameReceived }).clone();
   list = list.unis;
 
+  console.log(list);
+
   for (var i in list) {
     ans.push(i);
   }
