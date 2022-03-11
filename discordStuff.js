@@ -64,7 +64,7 @@ client.on("interactionCreate", async (interaction) => {
   }
 
   if (interaction.customId == "chance") {
-    if (interaction.user.username == "zayed.kheran") {
+    if (interaction.user.username == "zayed.kherani") {
       await interaction.update({
         content:
           "You have 0% chance of getting into your top choice, please leave.",
@@ -200,7 +200,7 @@ client.on("messageCreate", async (msg) => {
       await addUni(msg.content, msg.author.username);
 
       msg.reply("Congrats on applying! Your record has been updated");
-
+    
       global.mode = "";
     }
     
