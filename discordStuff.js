@@ -104,6 +104,20 @@ client.on("interactionCreate", async (interaction) => {
       components: [],
     });
   }
+  
+  if (interaction.customId == "reject") {
+    global.mode = "reject";
+
+    global.name = interaction.user.username;
+
+    let ans = await getUnisList(global.name);
+    global.arr = await getUnisArray(global.name);
+    await interaction.update({
+      content: `Which of these programs did you get rejected from?\n${ans}`,
+      components: [],
+    });
+  }
+
 });
 
 client.on("messageCreate", async (msg) => {
@@ -129,9 +143,13 @@ client.on("messageCreate", async (msg) => {
           .setCustomId("chance")
           .setLabel("Chances")
           .setStyle("DANGER"),
-        new MessageButton()
+          new MessageButton()
           .setCustomId("remove")
           .setLabel("Remove")
+          .setStyle("DANGER"),
+        new MessageButton()
+          .setCustomId("reject")
+          .setLabel("Reject")
           .setStyle("DANGER"),
       );
 
@@ -167,11 +185,39 @@ client.on("messageCreate", async (msg) => {
     for (var i = 0; i < global.arr.length; ++i) {
       if (msg.content.toLowerCase() == global.arr[i].toLowerCase()) {
         found = true;
-        changeUniStatus(global.name, global.arr[i]);
+        changeUniStatus(global.name, global.arr[i], "accept");
         msg.reply("CONGRATS ON GETTING IN! Your Uni record has been updated");
         global.name = "";
         global.arr = [];
 
+        global.mode = "";
+
+        return;
+      }
+    }
+    if (!found) {
+      global.name = "";
+      global.arr = [];
+      msg.reply(
+        "You have not applied to that program. Please try again"
+      );
+      return;
+    }
+  }
+
+  if (
+    global.mode == "reject" && 
+    msg.author.username == global.name &&
+    msg.content != "!reject"
+  ) {
+    var found = false;
+    for (var i = 0; i < global.arr.length; ++i) {
+      if (msg.content.toLowerCase() == global.arr[i].toLowerCase()) {
+        found = true;
+        changeUniStatus(global.name, global.arr[i], "reject");
+        msg.reply("They really missed out huh? Don't worry, it\'s their loss");
+        global.name = "";
+        global.arr = [];
         global.mode = "";
 
         return;

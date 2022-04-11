@@ -14,6 +14,9 @@ const getUnisList = async (nameReceived) => {
       if (list[i] == "Accepted") {
         ans += i + "✅";
         ans += "\n";
+      } else if (list[i] == "Rejected") {
+        ans += i + "❌";
+        ans += "\n";
       } else {
         ans += i;
         ans += "\n";
@@ -26,10 +29,14 @@ const getUnisList = async (nameReceived) => {
   }
 };
 
-const changeUniStatus = (nameReceived, uni) => {
+const changeUniStatus = (nameReceived, uni, action) => {
   uniData.findOne({ name: nameReceived }, function (err, res) {
     let personUniList = res.unis;
-    personUniList[uni] = "Accepted";
+    if (action == "accept") {
+      personUniList[uni] = "Accepted";
+    } else {
+      personUniList[uni] = "Rejected";
+    }
     uniData.findOneAndUpdate(
       { name: nameReceived },
       { unis: personUniList },
