@@ -25,7 +25,13 @@ const getUnisList = async (nameReceived) => {
     ans += "**";
     return ans;
   } catch (err) {
-    console.log("Uni List Error: " + err);
+    console.log("User doesn't exist. Creating user");
+    addUser = new uniData({
+      name: nameReceived,
+      unis: {}
+    });
+    addUser.save();
+    return "";
   }
 };
 
