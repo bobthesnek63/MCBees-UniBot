@@ -157,10 +157,18 @@ client.on("messageCreate", async (msg) => {
           .setStyle("DANGER"),
       );
 
-      msg.reply({
-        content: `Here are your current uni programs!\n${uniList}`,
-        components: [row],
-      });
+      if (process.env.BOT_TESTING == null) {
+        msg.reply({
+          content: `Here are your current uni programs!\n${uniList}`,
+          components: [row],
+        });
+      } else {
+        msg.reply({
+          content: `**IN TESTING**\nHere are your current uni programs!\n${uniList}`,
+          components: [row],
+        });
+      }
+
 
       // checks if user is trying to find someone elses university choices
     } else if (
