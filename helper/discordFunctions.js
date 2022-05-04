@@ -28,7 +28,7 @@ const getUnisList = async (nameReceived) => {
     console.log("User doesn't exist. Creating user");
     addUser = new uniData({
       name: nameReceived,
-      unis: {}
+      unis: []
     });
     addUser.save();
     return "";
@@ -79,27 +79,30 @@ const addUni = async (uniName, username) => {
     .clone();
   list = list.unis;
 
-  for (var [uni, uniDecision] of Object.entries(list)) {
-    uniList[uni] = uniDecision;
-  }
+  if (list == null){
 
-  uniList[uniName] = "Undecided";
-
-  uniData.findOne({ name: username }, function (err, res) {
-    let personUniList = uniList;
-    uniData.findOneAndUpdate(
-      { name: username },
-      { unis: personUniList },
-      { returnOriginal: false },
-      function (err, doc) {
-        if (err) {
-          console.log("Uni Status Error: " + err);
+  } else {
+    for (var [uni, uniDecision] of Object.entries(list)) {
+      uniList[uni] = uniDecision;
+    }
+  
+    uniList[uniName] = "Undecided";
+  
+    uniData.findOne({ name: username }, function (err, res) {
+      let personUniList = uniList;
+      uniData.findOneAndUpdate(
+        { name: username },
+        { unis: personUniList },
+        { returnOriginal: false },
+        function (err, doc) {
+          if (err) {
+            console.log("Uni Status Error: " + err);
+          }
         }
-      }
-    );
-  });
-
-  return;
+      );
+    });
+    return;
+  }
 };
 
 const removeUni = async (uniName, username) => {
