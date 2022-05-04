@@ -65,20 +65,24 @@ client.on("interactionCreate", async (interaction) => {
 
   if (interaction.customId == "chance") {
     if (interaction.user.username == "zayed.kherani") {
-      await interaction.update({
-        content:
-          "You have 0% chance of getting into your top choice, please leave.",
-        components: [],
-      }).catch(err => {
-        console.log(err);
-      });
+      await interaction
+        .update({
+          content:
+            "You have 0% chance of getting into your top choice, please leave.",
+          components: [],
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     } else {
-      await interaction.update({
-        content: "You have a 100% chance of getting into your top choice!",
-        components: [],
-      }).catch(err => {
-        console.log(err);
-      });
+      await interaction
+        .update({
+          content: "You have a 100% chance of getting into your top choice!",
+          components: [],
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   }
 
@@ -108,7 +112,7 @@ client.on("interactionCreate", async (interaction) => {
       components: [],
     });
   }
-  
+
   if (interaction.customId == "reject") {
     global.mode = "reject";
 
@@ -121,16 +125,17 @@ client.on("interactionCreate", async (interaction) => {
       components: [],
     });
   }
-
 });
 
 client.on("messageCreate", async (msg) => {
+  console.log(msg.content);
   if (
     msg.channelId == process.env.UNIBOT_THREAD ||
     msg.channelId == process.env.BOT_TESTING ||
     msg.channelId == process.env.UNIBOT_CHANNEL
   ) {
     if (msg.content == "!show") {
+      
       let name = msg.author.username;
       let uniList = await getUnisList(name);
 
@@ -147,14 +152,14 @@ client.on("messageCreate", async (msg) => {
           .setCustomId("chance")
           .setLabel("Chances")
           .setStyle("DANGER"),
-          new MessageButton()
+        new MessageButton()
           .setCustomId("remove")
           .setLabel("Remove")
           .setStyle("DANGER"),
         new MessageButton()
           .setCustomId("reject")
           .setLabel("Reject")
-          .setStyle("DANGER"),
+          .setStyle("DANGER")
       );
 
       msg.reply({
@@ -165,10 +170,10 @@ client.on("messageCreate", async (msg) => {
       // checks if user is trying to find someone elses university choices
     } else if (
       msg.content.slice(0, 5) == "!show" &&
-      msg.content.slice(6, 9) == "<@!"
+      msg.content.slice(6, 8) == "<@"
     ) {
       let name = client.users.fetch(
-        msg.content.slice(9, msg.content.length - 1)
+        msg.content.slice(8, msg.content.length - 1)
       );
       name = (await name).username;
       let uniList = await getUnisList(name);
@@ -181,7 +186,7 @@ client.on("messageCreate", async (msg) => {
 
   // Finds program name and updates users list
   if (
-    global.mode == "accept" && 
+    global.mode == "accept" &&
     msg.author.username == global.name &&
     msg.content != "!accept"
   ) {
@@ -202,15 +207,13 @@ client.on("messageCreate", async (msg) => {
     if (!found) {
       global.name = "";
       global.arr = [];
-      msg.reply(
-        "You have not applied to that program. Please try again"
-      );
+      msg.reply("You have not applied to that program. Please try again");
       return;
     }
   }
 
   if (
-    global.mode == "reject" && 
+    global.mode == "reject" &&
     msg.author.username == global.name &&
     msg.content != "!reject"
   ) {
@@ -219,7 +222,7 @@ client.on("messageCreate", async (msg) => {
       if (msg.content.toLowerCase() == global.arr[i].toLowerCase()) {
         found = true;
         changeUniStatus(global.name, global.arr[i], "reject");
-        msg.reply("They really missed out huh? Don't worry, it\'s their loss");
+        msg.reply("They really missed out huh? Don't worry, it's their loss");
         global.name = "";
         global.arr = [];
         global.mode = "";
@@ -230,15 +233,13 @@ client.on("messageCreate", async (msg) => {
     if (!found) {
       global.name = "";
       global.arr = [];
-      msg.reply(
-        "You have not applied to that program. Please try again"
-      );
+      msg.reply("You have not applied to that program. Please try again");
       return;
     }
   }
 
   if (
-    global.mode == "add" && 
+    global.mode == "add" &&
     msg.author.username == global.name &&
     msg.content != "!addUni"
   ) {
@@ -246,15 +247,15 @@ client.on("messageCreate", async (msg) => {
       await addUni(msg.content, msg.author.username);
 
       msg.reply("Congrats on applying! Your record has been updated");
-    
+
       global.mode = "";
     }
-    
+
     return;
   }
 
   if (
-    global.mode == "remove" && 
+    global.mode == "remove" &&
     msg.author.username == global.name &&
     msg.content != "!remove"
   ) {
@@ -264,7 +265,9 @@ client.on("messageCreate", async (msg) => {
         found = true;
         removeUni(global.arr[i], msg.author.username);
 
-        msg.reply(`${global.arr[i]} has been removed. Your record has been updated`);
+        msg.reply(
+          `${global.arr[i]} has been removed. Your record has been updated`
+        );
 
         global.mode = "";
 
@@ -275,9 +278,7 @@ client.on("messageCreate", async (msg) => {
     if (!found) {
       global.name = "";
       global.arr = [];
-      msg.reply(
-        "You have not applied to that program. Please try again"
-      );
+      msg.reply("You have not applied to that program. Please try again");
       return;
     }
   }
